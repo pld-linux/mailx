@@ -1,0 +1,20 @@
+--- mailx-8.1.1/fio.c.nullchar	Thu Feb  3 17:49:45 2000
++++ mailx-8.1.1/fio.c	Thu Feb  3 17:53:03 2000
+@@ -100,13 +100,16 @@
+ 			makemessage(mestmp);
+ 			return;
+ 		}
++		if(linebuf[0] == '\0')
++			linebuf[0] = '.';
+ 		count = strlen(linebuf);
+ 		(void) fwrite(linebuf, sizeof *linebuf, count, otf);
+ 		if (ferror(otf)) {
+ 			perror("/tmp");
+ 			exit(1);
+ 		}
+-		linebuf[count - 1] = 0;
++		if (linebuf[count-1]=='\n')
++			linebuf[count-1] = '\0';
+ 		if (maybe && linebuf[0] == 'F' && ishead(linebuf)) {
+ 			msgCount++;
+ 			if (append(&this, mestmp)) {
