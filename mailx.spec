@@ -37,7 +37,7 @@ Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 %patch1 -p1
 
 %build
-make CFLAGS="$RPM_OPT_FLAGS"
+%{__make} CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
