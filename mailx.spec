@@ -6,8 +6,7 @@ Release:	7
 Copyright:	BSD
 Group:		Applications/Mail
 Group(pl):	Aplikacje/Poczta
-######		ftp://ftp.debian.org/pub/debian/hamm/source/mail
-Source:		%{name}-%{version}.tar.gz
+Source:		ftp://ftp.debian.org/pub/debian/hamm/source/mail%{name}-%{version}.tar.gz
 Patch0:		%{name}-misc.patch
 Patch1:		%{name}-paths.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
@@ -42,7 +41,7 @@ make CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{bin,etc/mail,usr/{bin,share/{misc,man/man1}}}
+install -d $RPM_BUILD_ROOT{/bin,/etc/mail,%{_bindir},%{_datadir}/misc,%{_mandir}/man1}
 
 install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT%{_datadir}/misc
 install  misc/mail.rc $RPM_BUILD_ROOT/etc/mail
