@@ -6,8 +6,7 @@ Release:	8
 Copyright:	BSD
 Group:		Applications/Mail
 Group(pl):	Aplikacje/Poczta
-######		ftp://ftp.debian.org/pub/debian/hamm/source/mail
-Source:		%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
 Patch0:		%{name}-misc.diff
 Patch1:		%{name}-man.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -33,7 +32,7 @@ wykorzystywany w skryptach shella.
 Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
