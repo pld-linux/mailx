@@ -1,0 +1,180 @@
+diff -dur mailx-8.1.1.orig/cmd1.c mailx-8.1.1/cmd1.c
+--- mailx-8.1.1.orig/cmd1.c	2004-01-27 11:22:07.220567971 +0100
++++ mailx-8.1.1/cmd1.c	2004-01-27 11:30:16.877702222 +0100
+@@ -162,7 +162,7 @@
+ 	int *msgvec = v;
+ 	register int *ip;
+ 
+-	for (ip = msgvec; *ip != NULL; ip++)
++	for (ip = msgvec; *ip != 0; ip++)
+ 		printhead(*ip);
+ 	if (--ip >= msgvec)
+ 		dot = &message[*ip - 1];
+diff -dur mailx-8.1.1.orig/cmd2.c mailx-8.1.1/cmd2.c
+--- mailx-8.1.1.orig/cmd2.c	2004-01-27 11:22:07.206571282 +0100
++++ mailx-8.1.1/cmd2.c	2004-01-27 11:30:16.877702222 +0100
+@@ -67,7 +67,7 @@
+ 	register int *ip, *ip2;
+ 	int list[2], mdot;
+ 
+-	if (*msgvec != NULL) {
++	if (*msgvec != 0) {
+ 
+ 		/*
+ 		 * If some messages were supplied, find the 
+@@ -82,10 +82,10 @@
+ 		 * message list which follows dot.
+ 		 */
+ 
+-		for (ip = msgvec; *ip != NULL; ip++)
++		for (ip = msgvec; *ip != 0; ip++)
+ 			if (*ip > mdot)
+ 				break;
+-		if (*ip == NULL)
++		if (*ip == 0)
+ 			ip = msgvec;
+ 		ip2 = ip;
+ 		do {
+@@ -94,9 +94,9 @@
+ 				dot = mp;
+ 				goto hitit;
+ 			}
+-			if (*ip2 != NULL)
++			if (*ip2 != 0)
+ 				ip2++;
+-			if (*ip2 == NULL)
++			if (*ip2 == 0)
+ 				ip2 = msgvec;
+ 		} while (ip2 != ip);
+ 		printf("No messages applicable\n");
+@@ -130,7 +130,7 @@
+ 	 */
+ 
+ 	list[0] = dot - &message[0] + 1;
+-	list[1] = NULL;
++	list[1] = 0;
+ 	return(type(list));
+ }
+ 
+@@ -181,11 +181,11 @@
+ 		return(1);
+ 	if (!f) {
+ 		*msgvec = first(0, MMNORM);
+-		if (*msgvec == NULL) {
++		if (*msgvec == 0) {
+ 			printf("No messages to %s.\n", cmd);
+ 			return(1);
+ 		}
+-		msgvec[1] = NULL;
++		msgvec[1] = 0;
+ 	}
+ 	if (f && getmsglist(str, msgvec, 0) < 0)
+ 		return(1);
+@@ -305,7 +305,7 @@
+ 		list[0] = dot - &message[0] + 1;
+ 		if (list[0] > lastdot) {
+ 			touch(dot);
+-			list[1] = NULL;
++			list[1] = 0;
+ 			return(type(list));
+ 		}
+ 		printf("At EOF\n");
+@@ -327,18 +327,18 @@
+ 	register *ip;
+ 	int last;
+ 
+-	last = NULL;
+-	for (ip = msgvec; *ip != NULL; ip++) {
++	last = 0;
++	for (ip = msgvec; *ip != 0; ip++) {
+ 		mp = &message[*ip - 1];
+ 		touch(mp);
+ 		mp->m_flag |= MDELETED|MTOUCH;
+ 		mp->m_flag &= ~(MPRESERVE|MSAVED|MBOX);
+ 		last = *ip;
+ 	}
+-	if (last != NULL) {
++	if (last != 0) {
+ 		dot = &message[last-1];
+ 		last = first(0, MDELETED);
+-		if (last != NULL) {
++		if (last != 0) {
+ 			dot = &message[last-1];
+ 			return(0);
+ 		}
+diff -dur mailx-8.1.1.orig/cmd3.c mailx-8.1.1/cmd3.c
+--- mailx-8.1.1.orig/cmd3.c	2004-01-27 11:22:07.221567735 +0100
++++ mailx-8.1.1/cmd3.c	2004-01-27 11:30:16.878701986 +0100
+@@ -309,7 +309,7 @@
+ 		printf("Cannot \"preserve\" in edit mode\n");
+ 		return(1);
+ 	}
+-	for (ip = msgvec; *ip != NULL; ip++) {
++	for (ip = msgvec; *ip != 0; ip++) {
+ 		mesg = *ip;
+ 		mp = &message[mesg-1];
+ 		mp->m_flag |= MPRESERVE;
+@@ -329,7 +329,7 @@
+ 	int	*msgvec = v;
+ 	register int *ip;
+ 
+-	for (ip = msgvec; *ip != NULL; ip++) {
++	for (ip = msgvec; *ip != 0; ip++) {
+ 		dot = &message[*ip-1];
+ 		dot->m_flag &= ~(MREAD|MTOUCH);
+ 		dot->m_flag |= MSTATUS;
+@@ -348,7 +348,7 @@
+ 	register struct message *mp;
+ 	register int *ip, mesg;
+ 
+-	for (ip = msgvec; *ip != NULL; ip++) {
++	for (ip = msgvec; *ip != 0; ip++) {
+ 		mesg = *ip;
+ 		mp = &message[mesg-1];
+ 		printf("%d: %d/%ld\n", mesg, mp->m_lines, mp->m_size);
+diff -dur mailx-8.1.1.orig/collect.c mailx-8.1.1/collect.c
+--- mailx-8.1.1.orig/collect.c	2004-01-27 11:22:07.221567735 +0100
++++ mailx-8.1.1/collect.c	2004-01-27 11:30:16.878701986 +0100
+@@ -564,11 +564,11 @@
+ 		return(0);
+ 	if (*msgvec == 0) {
+ 		*msgvec = first(0, MMNORM);
+-		if (*msgvec == NULL) {
++		if (*msgvec == 0) {
+ 			printf("No appropriate messages\n");
+ 			return(0);
+ 		}
+-		msgvec[1] = NULL;
++		msgvec[1] = 0;
+ 	}
+ 	if (f == 'f' || f == 'F')
+ 		tabst = NOSTR;
+diff -dur mailx-8.1.1.orig/def.h mailx-8.1.1/def.h
+--- mailx-8.1.1.orig/def.h	1996-06-14 10:26:58.000000000 +0200
++++ mailx-8.1.1/def.h	2004-01-27 11:31:04.579420782 +0100
+@@ -42,6 +42,9 @@
+  * Author: Kurt Shoens (UCB) March 25, 1978
+  */
+ 
++/* for tempnam() */
++#define _GNU_SOURCE
++
+ #include <sys/param.h>
+ #include <sys/stat.h>
+ #include <sys/time.h>
+Only in mailx-8.1.1: def.h~
+diff -dur mailx-8.1.1.orig/lex.c mailx-8.1.1/lex.c
+--- mailx-8.1.1.orig/lex.c	2004-01-27 11:22:07.209570572 +0100
++++ mailx-8.1.1/lex.c	2004-01-27 11:30:16.879701750 +0100
+@@ -355,9 +355,9 @@
+ 		if (c  == 0) {
+ 			*msgvec = first(com->c_msgflag,
+ 				com->c_msgmask);
+-			msgvec[1] = NULL;
++			msgvec[1] = 0;
+ 		}
+-		if (*msgvec == NULL) {
++		if (*msgvec == 0) {
+ 			printf("No applicable messages\n");
+ 			break;
+ 		}
