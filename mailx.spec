@@ -2,7 +2,7 @@ Summary:	/bin/mail - the "traditional" way to mail via shell scripts
 Summary(pl):	Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
 Name:		mailx
 Version:	8.1.1
-Release:	22
+Release:	23
 License:	BSD
 Group:		Applications/Mail
 Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
