@@ -74,7 +74,7 @@ echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
 install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mail.1
 echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/pl/man1/Mail.1
 
-%clean 
+%clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
