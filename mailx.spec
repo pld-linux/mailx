@@ -59,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755, root, mail) /bin/mail
 %attr(755, root, mail) /usr/bin/Mail
 /usr/lib/*
-%attr(644, root, man) %{_mandir}/man1/*
+%{_mandir}/man1/*
 
 %changelog
 * Mon Jun 15 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
