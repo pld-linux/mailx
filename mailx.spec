@@ -13,6 +13,7 @@ Patch1:		%{name}-man.patch
 Patch2:		%{name}-nullchar.patch
 Patch3:		%{name}-nopanic.patch
 Patch4:		%{name}-debian.diff
+Patch5:		%{name}-pathnames.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -42,6 +43,7 @@ Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__make} CFLAGS="$RPM_OPT_FLAGS"
