@@ -2,13 +2,14 @@ Summary:	/bin/mail - the "traditional" way to mail via shell scripts
 Summary(pl):	Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
 Name:		mailx
 Version:	8.1.1
-Release:	21
+Release:	22
 License:	BSD
 Group:		Applications/Mail
 Group(de):	Applikationen/Post
 Group(pl):	Aplikacje/Poczta
 Group(pt):	Aplicações/Correio Eletrônico
 Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
+Source1:	mail.1.pl
 Patch0:		%{name}-misc.diff
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-nullchar.patch
@@ -61,7 +62,8 @@ Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/bin,/etc/skel,%{_bindir},%{_datadir}/misc,%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{/bin,/etc/skel,%{_bindir},%{_datadir}/misc} \
+	$RPM_BUILD_ROOT%{_mandir}/{man1,pl/man1}
 
 install	misc/* $RPM_BUILD_ROOT%{_datadir}/misc
 install misc/mail.rc $RPM_BUILD_ROOT/etc/skel/.mailrc
@@ -71,6 +73,9 @@ ln -sf ../../bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
 
 install mail.1 $RPM_BUILD_ROOT%{_mandir}/man1
 echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mail.1
+echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/pl/man1/Mail.1
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
@@ -85,3 +90,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_datadir}/misc/*
 %{_mandir}/man1/*
+%lang(pl) %{_mandir}/pl/man1/*
