@@ -1,13 +1,15 @@
-Summary:     /bin/mail - the "traditional" way to mail via shell scripts, etc
-Summary(pl): Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
-Name:        mailx
-Version:     8.1.1
-Release:     6
-Copyright:   BSD
-Group:       Applications/Mail
-Source:      ftp://ftp.debian.org/pub/debian/hamm/source/mail/%{name}-%{version}.tar.gz
-Patch:       %{name}-%{version}.debian.patch
-Patch1:      %{name}.patch
+Summary:	/bin/mail - the "traditional" way to mail via shell scripts
+Summary(pl):	Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
+Name:		mailx
+Version:	8.1.1
+Release:	7
+Copyright:	BSD
+Group:		Applications/Mail
+Group(pl):	Aplikacje/Poczta
+######		ftp://ftp.debian.org/pub/debian/hamm/source/mail
+Source:		%{name}-%{version}.tar.gz
+Patch0:		%{name}-misc.patch
+Patch1:		%{name}-paths.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -31,37 +33,47 @@ wykorzystywany w skryptach shella.
 Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 
 %prep
-%setup -q
-%patch -p1
+%setup 	-q
+%patch0 -p1
 %patch1 -p1
 
 %build
-make CPPFLAGS="-D_BSD_SOURCE $RPM_OPT_FLAGS"
+make CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{bin,etc/mail,usr/{lib,bin,man/man1}}
+install -d $RPM_BUILD_ROOT/{bin,etc/mail,usr/{bin,share/{misc,man/man1}}}
 
-install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT%{_libdir}
+install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT%{_datadir}/misc
 install  misc/mail.rc $RPM_BUILD_ROOT/etc/mail
 
 install -s mail $RPM_BUILD_ROOT/bin
 ln -sf /bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
+
 install mail.1 $RPM_BUILD_ROOT%{_mandir}/man1
-echo ".so mail.1" > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
+echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
+
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man1/*
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644,root, mail,755)
+%defattr(644,root,root,755)
 %config(noreplace) %verify(not size mtime md5) /etc/mail/mail.rc
-%attr(755,root, mail) /bin/mail
-%attr(755,root, mail) %{_bindir}/Mail
-%{_libdir}/*
+
+%attr(755,root,root) /bin/mail
+%attr(755,root,root) %{_bindir}/Mail
+
+%{_datadir}/misc/*
 %{_mandir}/man1/*
 
 %changelog
+* Thu May 27 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+- FHS 2.0 && GNU libc-2.1 
+
+-- still problem with +user@host -- not works 
+
 * Mon Jun 15 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [8.1.1-1]
 - added pl translation,
@@ -71,12 +83,3 @@ rm -rf $RPM_BUILD_ROOT
 
 * Fri Jun 12 1998 Alan Cox <alan@redhat.com>
 - Moved from 5.5 to the OpenBSD 8.1 release plus Debian patches
-
-* Tue May 05 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Tue Oct 21 1997 Donnie Barnes <djb@redhat.com>
-- spec file cleanups
-
-* Thu Jun 12 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
