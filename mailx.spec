@@ -2,7 +2,7 @@ Summary:	/bin/mail - the "traditional" way to mail via shell scripts
 Summary(pl):	Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
 Name:		mailx
 Version:	8.1.1
-Release:	16
+Release:	17
 License:	BSD
 Group:		Applications/Mail
 Group(pl):	Aplikacje/Poczta
@@ -50,10 +50,10 @@ Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/bin,/etc/skel/C,%{_bindir},%{_datadir}/misc,%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{/bin,/etc/skel,%{_bindir},%{_datadir}/misc,%{_mandir}/man1}
 
 install	misc/* $RPM_BUILD_ROOT%{_datadir}/misc
-install misc/mail.rc $RPM_BUILD_ROOT/etc/skel/C/.mailrc
+install misc/mail.rc $RPM_BUILD_ROOT/etc/skel/.mailrc
 
 install -s mail $RPM_BUILD_ROOT/bin
 ln -sf ../../bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
@@ -72,7 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /bin/mail
 %attr(755,root,root) %{_bindir}/Mail
 
-/etc/skel
+/etc/skel/*
 
 %{_datadir}/misc/*
 %{_mandir}/man1/*
