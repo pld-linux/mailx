@@ -1,0 +1,35 @@
+--- mailx-8.1.1/send.c	Fri Jun 14 10:27:08 1996
++++ mailx-8.1.1/send.sz.c	Tue Mar  6 17:34:44 2001
+@@ -489,19 +489,23 @@
+ 	FILE *fo;
+ 	int w;
+ {
+-	register int gotcha;
+-
+-	gotcha = 0;
++	time_t czas;
++	struct tm *czas_s;
++	char strdata[128];
++	
++	time(&czas);
++	czas_s = localtime(&czas);
++	strftime(strdata, 64, "%a, %d %b %Y %T %z", czas_s);
++	fprintf(fo, "Date: %s\n", strdata);
+ 	if (hp->h_to != NIL && w & GTO)
+-		fmt("To:", hp->h_to, fo, w&GCOMMA), gotcha++;
++		fmt("To:", hp->h_to, fo, w&GCOMMA);
+ 	if (hp->h_subject != NOSTR && w & GSUBJECT)
+-		fprintf(fo, "Subject: %s\n", hp->h_subject), gotcha++;
++		fprintf(fo, "Subject: %s\n", hp->h_subject);
+ 	if (hp->h_cc != NIL && w & GCC)
+-		fmt("Cc:", hp->h_cc, fo, w&GCOMMA), gotcha++;
++		fmt("Cc:", hp->h_cc, fo, w&GCOMMA);
+ 	if (hp->h_bcc != NIL && w & GBCC)
+-		fmt("Bcc:", hp->h_bcc, fo, w&GCOMMA), gotcha++;
+-	if (gotcha && w & GNL)
+-		(void) putc('\n', fo);
++		fmt("Bcc:", hp->h_bcc, fo, w&GCOMMA);
++	putc('\n', fo);
+ 	return(0);
+ }
+ 
