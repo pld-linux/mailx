@@ -2,7 +2,7 @@ Summary:	/bin/mail - the "traditional" way to mail via shell scripts
 Summary(pl):	Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
 Name:		mailx
 Version:	8.1.1
-Release:	17
+Release:	18
 License:	BSD
 Group:		Applications/Mail
 Group(pl):	Aplikacje/Poczta
@@ -14,6 +14,7 @@ Patch2:		%{name}-nullchar.patch
 Patch3:		%{name}-nopanic.patch
 Patch4:		%{name}-debian.diff
 Patch5:		%{name}-pathnames.patch
+Patch6:		%{name}-date.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -44,6 +45,7 @@ Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %{__make} CFLAGS="$RPM_OPT_FLAGS"
