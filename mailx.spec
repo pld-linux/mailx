@@ -72,7 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /bin/mail
 %attr(755,root,root) %{_bindir}/Mail
 
-/etc/skel/.mailxrc
+/etc/skel/.mailrc
 
 %{_datadir}/misc/*
 %{_mandir}/man1/*
