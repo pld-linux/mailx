@@ -57,7 +57,7 @@ Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 %patch10 -p1
 
 %build
-%{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g}"
+%{__make} CFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -66,13 +66,11 @@ install -d $RPM_BUILD_ROOT{/bin,/etc/skel,%{_bindir},%{_datadir}/misc,%{_mandir}
 install	misc/* $RPM_BUILD_ROOT%{_datadir}/misc
 install misc/mail.rc $RPM_BUILD_ROOT/etc/skel/.mailrc
 
-install -s mail $RPM_BUILD_ROOT/bin
+install mail $RPM_BUILD_ROOT/bin
 ln -sf ../../bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
 
 install mail.1 $RPM_BUILD_ROOT%{_mandir}/man1
 echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
-
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/*
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
