@@ -9,6 +9,7 @@ Group(pl):	Aplikacje/Poczta
 Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
 Patch0:		%{name}-misc.diff
 Patch1:		%{name}-man.patch
+Patch2:		%{name}-interactive.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,6 +36,7 @@ Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__make} CFLAGS="$RPM_OPT_FLAGS"
