@@ -46,7 +46,7 @@ install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT%{_libdir}
 install  misc/mail.rc $RPM_BUILD_ROOT/etc/mail
 
 install -s mail $RPM_BUILD_ROOT/bin
-ln -sf /bin/mail $RPM_BUILD_ROOT/usr/bin/Mail
+ln -sf /bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
 install mail.1 $RPM_BUILD_ROOT%{_mandir}/man1
 echo ".so mail.1" > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
 
@@ -57,7 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644, root, mail, 755)
 %config(noreplace) %verify(not size mtime md5) /etc/mail/mail.rc
 %attr(755, root, mail) /bin/mail
-%attr(755, root, mail) /usr/bin/Mail
+%attr(755, root, mail) %{_bindir}/Mail
 %{_libdir}/*
 %{_mandir}/man1/*
 
