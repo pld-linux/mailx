@@ -8,7 +8,7 @@ Group:       Applications/Mail
 Source:      ftp://ftp.debian.org/pub/debian/hamm/source/mail/%{name}-%{version}.tar.gz
 Patch:       %{name}-%{version}.debian.patch
 Patch1:      %{name}.patch
-Buildroot:   /tmp/%{name}-%{version}-root
+BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
 The /bin/mail program can be used to send quick mail messages, and
