@@ -1,0 +1,114 @@
+--- mailx-8.1.1/cmd1.c	Mon Aug  7 12:00:51 2000
++++ mailx-8.1.1/cmd1.c	Mon Aug  7 12:00:51 2000
+@@ -334,6 +334,6 @@
+ 		if (page || nlines > (*cp ? atoi(cp) : realscreenheight)) {
+-			cp = value("PAGER");
+-			if (cp == NULL || *cp == '\0')
++				cp = getenv("PAGER");
++			if (cp == NULL || *cp == '\0')
+ 				cp = _PATH_MORE;
+ 			obuf = Popen(cp, "w");
+ 			if (obuf == NULL) {
+@@ -470,6 +472,6 @@
+ 		return 1;
+ 	}
+-	if ((cmd = value("LISTER")) == NOSTR)
++	if ((cmd = getenv("LISTER")) == NOSTR)
+ 		cmd = "ls";
+ 	(void) run_command(cmd, 0, -1, -1, dirname, NOSTR, NOSTR);
+ 	return 0;
+--- mailx-8.1.1/cmd3.c	Mon Aug  7 12:00:51 2000
++++ mailx-8.1.1/cmd3.c	Mon Aug  7 12:00:51 2000
+@@ -70,6 +70,6 @@
+ 	if (bangexp(cmd, BUFSIZ) < 0)
+ 		return 1;
+-	if ((shell = value("SHELL")) == NOSTR)
++	if ((shell = getenv("SHELL")) == NOSTR)
+ 		shell = _PATH_CSHELL;
+ 	(void) run_command(shell, 0, -1, -1, "-c", cmd, NOSTR);
+ 	(void) signal(SIGINT, sigint);
+@@ -89,6 +90,6 @@
+ 	char *shell;
+ 
+-	if ((shell = value("SHELL")) == NOSTR)
++	if ((shell = getenv("SHELL")) == NOSTR)
+ 		shell = _PATH_CSHELL;
+ 	(void) run_command(shell, 0, -1, -1, NOSTR, NOSTR, NOSTR);
+ 	(void) signal(SIGINT, sigint);
+--- mailx-8.1.1/collect.c	Mon Aug  7 12:00:51 2000
++++ mailx-8.1.1/collect.c	Mon Aug  7 12:00:51 2000
+@@ -517,6 +517,6 @@
+ 	 * stdout = new message.
+ 	 */
+-	if ((shell = value("SHELL")) == NOSTR)
++	if ((shell = getenv("SHELL")) == NOSTR)
+ 		shell = _PATH_CSHELL;
+ 	if (run_command(shell,
+ 	    0, fileno(fp), fileno(nf), "-c", cmd, NOSTR) < 0) {
+--- mailx-8.1.1/edit.c	Mon Aug  7 12:00:51 2000
++++ mailx-8.1.1/edit.c	Mon Aug  7 12:00:51 2000
+@@ -194,6 +194,6 @@
+ 	}
+ 	nf = NULL;
+-	if ((edit = value(type == 'e' ? "EDITOR" : "VISUAL")) == NOSTR)
++	if ((edit = getenv(type == 'e' ? "EDITOR" : "VISUAL")) == NOSTR)
+ 		edit = type == 'e' ? _PATH_EX : _PATH_VI;
+ 	if (run_command(edit, 0, -1, -1, tempEdit, NOSTR, NOSTR) < 0) {
+ 		(void) unlink(tempEdit);
+--- mailx-8.1.1/fio.c	Mon Aug  7 12:00:51 2000
++++ mailx-8.1.1/fio.c	Mon Aug  7 12:00:51 2000
+@@ -391,6 +391,6 @@
+ 		return savestr(prevfile);
+ 	case '&':
+-		if (name[1] == 0 && (name = value("MBOX")) == NOSTR)
++		if ((name = getenv("MBOX")) == NOSTR)
+ 			name = "~/mbox";
+ 		/* fall through */
+ 	}
+@@ -411,6 +412,6 @@
+ 	}
+ 	snprintf(cmdbuf, PATHSIZE, "echo %s", name);
+-	if ((shell = value("SHELL")) == NOSTR)
++	if ((shell = getenv("SHELL")) == NOSTR)
+ 		shell = _PATH_CSHELL;
+ 	pid = start_command(shell, 0, -1, pivec[1], "-c", cmdbuf, NOSTR);
+ 	if (pid < 0) {
+@@ -479,6 +481,6 @@
+ 	register char *cp;
+ 
+-	if ((cp = value("DEAD")) == NOSTR || (cp = expand(cp)) == NOSTR)
++	if ((cp = getenv("DEAD")) == NOSTR || (cp = expand(cp)) == NOSTR)
+ 		cp = expand("~/dead.letter");
+ 	else if (*cp != '/') {
+ 		char buf[PATHSIZE];
+--- mailx-8.1.1/names.c	Mon Aug  7 12:00:51 2000
++++ mailx-8.1.1/names.c	Mon Aug  7 12:00:51 2000
+@@ -299,6 +299,6 @@
+ 			 * on one another.
+ 			 */
+-			if ((shell = value("SHELL")) == NOSTR)
++			if ((shell = getenv("SHELL")) == NOSTR)
+ 				shell = _PATH_CSHELL;
+ 			sigemptyset(&nset);
+ 			sigaddset(&nset, SIGHUP);
+--- mailx-8.1.1/mail.1	Mon Aug  7 12:00:51 2000
++++ mailx-8.1.1/mail.1	Mon Aug  7 12:00:51 2000
+@@ -985,9 +985,16 @@
+ .Sh ENVIRONMENT
+ .Nm Mail
+ utilizes the
+-.Ev HOME
++.Ev HOME,
++.Ev USER,
++.Ev SHELL,
++.Ev DEAD,
++.Ev PAGER,
++.Ev LISTER,
++.Ev EDITOR,
++.Ev VISUAL
+ and
+-.Ev USER
++.Ev MBOX
+ environment variables.
+ .Sh FILES
+ .Bl -tag -width /usr/lib/mail.*help -compact
