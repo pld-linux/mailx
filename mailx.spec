@@ -42,7 +42,7 @@ make CPPFLAGS="-D_BSD_SOURCE $RPM_OPT_FLAGS"
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{bin,etc/mail,usr/{lib,bin,man/man1}}
 
-install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT/usr/lib
+install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT%{_libdir}
 install  misc/mail.rc $RPM_BUILD_ROOT/etc/mail
 
 install -s mail $RPM_BUILD_ROOT/bin
@@ -58,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not size mtime md5) /etc/mail/mail.rc
 %attr(755, root, mail) /bin/mail
 %attr(755, root, mail) /usr/bin/Mail
-/usr/lib/*
+%{_libdir}/*
 %{_mandir}/man1/*
 
 %changelog
