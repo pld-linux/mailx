@@ -6,7 +6,7 @@ Release:	9
 Copyright:	BSD
 Group:		Applications/Mail
 Group(pl):	Aplikacje/Poczta
-Source:		ftp://ftp.debian.org/pub/debian/hamm/source/mail%{name}-%{version}.tar.gz
+Source:		ftp://ftp.debian.org/pub/debian/hamm/source/%{name}-%{version}.tar.gz
 Patch0:		%{name}-misc.patch
 Patch1:		%{name}-paths.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
