@@ -54,10 +54,10 @@ echo ".so mail.1" > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644, root, mail, 755)
+%defattr(644,root, mail,755)
 %config(noreplace) %verify(not size mtime md5) /etc/mail/mail.rc
-%attr(755, root, mail) /bin/mail
-%attr(755, root, mail) %{_bindir}/Mail
+%attr(755,root, mail) /bin/mail
+%attr(755,root, mail) %{_bindir}/Mail
 %{_libdir}/*
 %{_mandir}/man1/*
 
