@@ -68,14 +68,3 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_datadir}/misc/*
 %{_mandir}/man1/*
-
-%changelog
-* Thu May 27 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-- FHS 2.0 && GNU libc-2.1 
-
-* Mon Jun 15 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [8.1.1-1]
-- added pl translation,
-- added buildroot support,
-- moved /etc/mail.rc to /etc/mail/mail.rc,
-- build from non root's account.
