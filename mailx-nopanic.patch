@@ -1,0 +1,21 @@
+--- mailx-8.1.1/popen.c.nopanic	Thu Feb  3 16:47:13 2000
++++ mailx-8.1.1/popen.c	Thu Feb  3 16:48:09 2000
+@@ -180,6 +180,8 @@
+ 	sigset_t nset, oset;
+ 
+ 	i = file_pid(ptr);
++	if(i < 0) return 0;
++
+ 	unregister_file(ptr);
+ 	(void) fclose(ptr);
+ 	sigemptyset(&nset);
+@@ -242,8 +244,7 @@
+ 	for (p = fp_head; p; p = p->link)
+ 		if (p->fp == fp)
+ 			return (p->pid);
+-	panic("Invalid file pointer");
+-	/*NOTREACHED*/
++	return -1;
+ }
+ 
+ /*
