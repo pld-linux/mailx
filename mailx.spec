@@ -8,7 +8,8 @@ Group:		Applications/Mail
 Group(pl):	Aplikacje/Poczta
 ######		ftp://ftp.debian.org/pub/debian/hamm/source/mail
 Source:		%{name}-%{version}.tar.gz
-Patch0:		%{name}-misc.patch
+Patch0:		%{name}-misc.diff
+Patch1:		%{name}-man.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -32,18 +33,19 @@ wykorzystywany w skryptach shella.
 Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 
 %prep
-%setup -q
-%patch -p1
+%setup  -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{bin,etc/mail,usr/{bin,share/{misc,man/man1}}}
+install -d $RPM_BUILD_ROOT/{bin,etc/skel/C,usr/{bin,share/{misc,man/man1}}}
 
-install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT%{_datadir}/misc
-install  misc/mail.rc $RPM_BUILD_ROOT/etc/mail
+install	misc/*		$RPM_BUILD_ROOT%{_datadir}/misc
+cat	misc/mail.rc >	$RPM_BUILD_ROOT/etc/skel/C/.mailrc
 
 install -s mail $RPM_BUILD_ROOT/bin
 ln -sf /bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
@@ -58,10 +60,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not size mtime md5) /etc/mail/mail.rc
 
 %attr(755,root,root) /bin/mail
 %attr(755,root,root) %{_bindir}/Mail
+
+/etc/skel
 
 %{_datadir}/misc/*
 %{_mandir}/man1/*
@@ -76,6 +79,3 @@ rm -rf $RPM_BUILD_ROOT
 - added buildroot support,
 - moved /etc/mail.rc to /etc/mail/mail.rc,
 - build from non root's account.
-
-* Fri Jun 12 1998 Alan Cox <alan@redhat.com>
-- Moved from 5.5 to the OpenBSD 8.1 release plus Debian patches
