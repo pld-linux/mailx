@@ -6,6 +6,7 @@ Release:	22
 License:	BSD
 Group:		Applications/Mail
 Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
+# Source0-md5: 2a5b39e90b9d6d4e56b6cc930b0c4db4
 Source1:	mail.1.pl
 Patch0:		%{name}-misc.diff
 Patch1:		%{name}-man.patch
