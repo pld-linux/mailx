@@ -9,6 +9,7 @@ Group(de):	Applikationen/Post
 Group(pl):	Aplikacje/Poczta
 Group(pt):	Aplicações/Correio Eletrônico
 Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
+# Source0-md5:	2a5b39e90b9d6d4e56b6cc930b0c4db4
 Patch0:		%{name}-misc.diff
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-nullchar.patch
