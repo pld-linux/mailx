@@ -47,8 +47,8 @@ install  misc/mail.rc $RPM_BUILD_ROOT/etc/mail
 
 install -s mail $RPM_BUILD_ROOT/bin
 ln -sf /bin/mail $RPM_BUILD_ROOT/usr/bin/Mail
-install mail.1 $RPM_BUILD_ROOT/usr/man/man1
-echo ".so mail.1" > $RPM_BUILD_ROOT/usr/man/man1/Mail.1
+install mail.1 $RPM_BUILD_ROOT%{_mandir}/man1
+echo ".so mail.1" > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
 
 %clean 
 rm -rf $RPM_BUILD_ROOT
@@ -59,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755, root, mail) /bin/mail
 %attr(755, root, mail) /usr/bin/Mail
 /usr/lib/*
-%attr(644, root, man) /usr/man/man1/*
+%attr(644, root, man) %{_mandir}/man1/*
 
 %changelog
 * Mon Jun 15 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
