@@ -10,7 +10,7 @@ Group(pl):	Aplikacje/Poczta
 Source:		%{name}-%{version}.tar.gz
 Patch0:		%{name}-misc.diff
 Patch1:		%{name}-man.patch
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The /bin/mail program can be used to send quick mail messages, and
