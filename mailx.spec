@@ -2,13 +2,13 @@ Summary:	/bin/mail - the "traditional" way to mail via shell scripts
 Summary(pl):	Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
 Name:		mailx
 Version:	8.1.1
-Release:	9
+Release:	8
 Copyright:	BSD
 Group:		Applications/Mail
 Group(pl):	Aplikacje/Poczta
-Source:		ftp://ftp.debian.org/pub/debian/hamm/source/%{name}-%{version}.tar.gz
+######		ftp://ftp.debian.org/pub/debian/hamm/source/mail
+Source:		%{name}-%{version}.tar.gz
 Patch0:		%{name}-misc.patch
-Patch1:		%{name}-paths.patch
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -32,16 +32,15 @@ wykorzystywany w skryptach shella.
 Genellikle kabuk yorumlayýcýlarý içinde kullanýlýr.
 
 %prep
-%setup 	-q
-%patch0 -p1
-%patch1 -p1
+%setup -q
+%patch -p1
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/bin,/etc/mail,%{_bindir},%{_datadir}/misc,%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT/{bin,etc/mail,usr/{bin,share/{misc,man/man1}}}
 
 install  misc/{mail.help,mail.tildehelp} $RPM_BUILD_ROOT%{_datadir}/misc
 install  misc/mail.rc $RPM_BUILD_ROOT/etc/mail
@@ -70,8 +69,6 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Thu May 27 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
 - FHS 2.0 && GNU libc-2.1 
-
--- still problem with +user@host -- not works 
 
 * Mon Jun 15 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [8.1.1-1]
