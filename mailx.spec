@@ -5,9 +5,6 @@ Version:	8.1.1
 Release:	22
 License:	BSD
 Group:		Applications/Mail
-Group(de):	Applikationen/Post
-Group(pl):	Aplikacje/Poczta
-Group(pt):	Aplicações/Correio Eletrônico
 Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
 Source1:	mail.1.pl
 Patch0:		%{name}-misc.diff
