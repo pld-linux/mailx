@@ -1,0 +1,38 @@
+diff -Nru mailx-8.1.1/glob.h mailx-8.1.1.new/glob.h
+--- mailx-8.1.1/glob.h	Wed Mar  7 16:39:28 2001
++++ mailx-8.1.1.new/glob.h	Wed Mar  7 16:34:16 2001
+@@ -79,6 +79,7 @@
+ struct	ignoretab	ignoreall[2];	/* special, ignore all headers */
+ char	**altnames;			/* List of alternate names for user */
+ int	debug;				/* Debug flag set */
++int	uflag;				/* -u option given? */
+ int	screenwidth;			/* Screen width, or best guess */
+ int	screenheight;			/* Screen height, or best guess,
+ 					   for "header" command */
+diff -Nru mailx-8.1.1/main.c mailx-8.1.1.new/main.c
+--- mailx-8.1.1/main.c	Wed Mar  7 16:39:28 2001
++++ mailx-8.1.1.new/main.c	Wed Mar  7 16:34:16 2001
+@@ -153,8 +153,10 @@
+ 		case 'u':
+ 			/*
+ 			 * Next argument is person to pretend to be.
++			 * Set a flag to tell findmail to ignore MAIL.
+ 			 */
+ 			myname = optarg;
++			uflag++;
+ 			break;
+ 		case 'i':
+ 			/*
+diff -Nru mailx-8.1.1/v7.local.c mailx-8.1.1.new/v7.local.c
+--- mailx-8.1.1/v7.local.c	Wed Mar  7 16:39:28 2001
++++ mailx-8.1.1.new/v7.local.c	Wed Mar  7 16:38:01 2001
+@@ -66,7 +66,8 @@
+ {
+ 	char *mbox;
+ 
+-	if (!(mbox = getenv("MAIL"))) {
++	mbox = getenv("MAIL");
++	if (uflag || (mbox == NOSTR)) {
+ 		char safelist[] = _PATH_MAILDIR;
+ 		char *safepath, *p = safelist;
+ 		while ((safepath = strtok(p, ":"))) {
