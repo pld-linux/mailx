@@ -1,6 +1,26 @@
---- mailx-8.1.1/send.c	Fri Jun 14 10:27:08 1996
-+++ mailx-8.1.1/send.sz.c	Tue Mar  6 17:34:44 2001
-@@ -489,19 +489,23 @@
+diff -dur mailx-8.1.1.orig/names.c mailx-8.1.1/names.c
+--- mailx-8.1.1.orig/names.c	2004-01-27 11:32:23.405773493 +0100
++++ mailx-8.1.1/names.c	2004-01-27 11:32:53.980539061 +0100
+@@ -51,6 +51,7 @@
+ #include "rcv.h"
+ #include <fcntl.h>
+ #include "extern.h"
++#include <time.h>
+ 
+ /*
+  * Allocate a single element of a name list,
+diff -dur mailx-8.1.1.orig/send.c mailx-8.1.1/send.c
+--- mailx-8.1.1.orig/send.c	1996-06-14 10:27:08.000000000 +0200
++++ mailx-8.1.1/send.c	2004-01-27 11:33:11.505392024 +0100
+@@ -44,6 +44,7 @@
+ 
+ #include "rcv.h"
+ #include "extern.h"
++#include <time.h>
+ 
+ /*
+  * Mail -- a mail program
+@@ -489,19 +490,23 @@
  	FILE *fo;
  	int w;
  {
