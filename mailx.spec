@@ -1,5 +1,5 @@
 Summary:	/bin/mail - the "traditional" way to mail via shell scripts
-Summary(pl):	Tradycyjna metoda wysy³ania poczty przy pomocy komendy z shella
+Summary(pl.UTF-8):   Tradycyjna metoda wysyÅ‚ania poczty przy pomocy komendy z shella
 Name:		mailx
 Version:	8.1.1
 Release:	26
@@ -28,21 +28,21 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The /bin/mail program can be used to send quick mail messages, and is
 often used in shell scripts.
 
-%description -l de
+%description -l de.UTF-8
 Das /bin/mail-Programm dient zum Versenden von Quick-Mail- Nachrichten
-und wird häufig in Shell-Skripts verwendet.
+und wird hÃ¤ufig in Shell-Skripts verwendet.
 
-%description -l fr
-Le programme /bin/mail peut être utilisé pour envoyer des mails
-rapides et est souvent utilisé dans les scripts shell.
+%description -l fr.UTF-8
+Le programme /bin/mail peut Ãªtre utilisÃ© pour envoyer des mails
+rapides et est souvent utilisÃ© dans les scripts shell.
 
-%description -l pl
-Przy pomocy programu /bin/mail mo¿na wysy³aæ pocztê. Czêsto jest on
+%description -l pl.UTF-8
+Przy pomocy programu /bin/mail moÅ¼na wysyÅ‚aÄ‡ pocztÄ™. CzÄ™sto jest on
 wykorzystywany w skryptach shella.
 
-%description -l tr
-/bin/mail programı hızlı olarak mektup göndermek için kullanılabilir.
-Genellikle kabuk yorumlayıcıları içinde kullanılır.
+%description -l tr.UTF-8
+/bin/mail programÄ± hÄ±zlÄ± olarak mektup gÃ¶ndermek iÃ§in kullanÄ±labilir.
+Genellikle kabuk yorumlayÄ±cÄ±larÄ± iÃ§inde kullanÄ±lÄ±r.
 
 %prep
 %setup -q
