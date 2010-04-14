@@ -1,98 +1,87 @@
-Summary:	/bin/mail - the "traditional" way to mail via shell scripts
-Summary(pl.UTF-8):	Tradycyjna metoda wysyłania poczty przy pomocy komendy z shella
+Summary:	An enhanced implementation of the mailx command
+Summary(pl.UTF-8):	Rozszerzona implementacja komendy mailx
 Name:		mailx
-Version:	8.1.1
-Release:	34
+Version:	24.4
+Release:	0.1
 License:	BSD
 Group:		Applications/Mail
-Source0:	ftp://ftp.ptb.de/pub/mail/unix/%{name}-%{version}.tar.gz
-# Source0-md5:	2a5b39e90b9d6d4e56b6cc930b0c4db4
-Source1:	mail.1.pl
-Patch0:		%{name}-misc.diff
-Patch1:		%{name}-man.patch
-Patch2:		%{name}-nullchar.patch
-Patch3:		%{name}-nopanic.patch
-Patch4:		%{name}-debian.diff
-Patch5:		%{name}-pathnames.patch
-Patch6:		%{name}-date.patch
-Patch7:		%{name}-siglj.patch
-Patch8:		%{name}-environ.patch
-Patch9:		%{name}-bug10074.patch
-Patch10:	%{name}-version.patch
-Patch11:	%{name}-kill_warnings.patch
-Patch12:	%{name}-gcc4.patch
+Source0:	http://dl.sourceforge.net/heirloom/%{name}-%{version}.tar.bz2
+# Source0-md5:	0c93759e34200eb56a0e7c464680a54a
+Patch0:		%{name}-bsdcompat.patch
+Patch1:		%{name}-use-krb5-gss.patch
+URL:		http://heirloom.sourceforge.net/mailx.html
+BuildRequires:	heimdal-devel
+BuildRequires:	openssl-devel >= 0.9.7d
+Obsoletes:	nail
 Obsoletes:	nail-mail
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-The /bin/mail program can be used to send quick mail messages, and is
-often used in shell scripts.
-
-%description -l de.UTF-8
-Das /bin/mail-Programm dient zum Versenden von Quick-Mail- Nachrichten
-und wird häufig in Shell-Skripts verwendet.
-
-%description -l fr.UTF-8
-Le programme /bin/mail peut être utilisé pour envoyer des mails
-rapides et est souvent utilisé dans les scripts shell.
+Heirloom mailx is derived from Berkeley Mail and is intended provide the
+functionality of the POSIX mailx command with additional support
+for MIME messages, IMAP, POP3, and SMTP. It provides enhanced
+features for interactive use, such as caching and disconnected
+operation for IMAP, message threading, scoring, and filtering.
+It is also usable as a mail batch language, both for sending
+and receiving mail.A
 
 %description -l pl.UTF-8
-Przy pomocy programu /bin/mail można wysyłać pocztę. Często jest on
-wykorzystywany w skryptach shella.
-
-%description -l tr.UTF-8
-/bin/mail programı hızlı olarak mektup göndermek için kullanılabilir.
-Genellikle kabuk yorumlayıcıları içinde kullanılır.
+Heirloom mailx został stworzony na podstawie Berkeley Mail z zamysłem
+dostarczenia funkcjonalnosci komendy POSIX mailx z dodatkowym
+wsparciem dla MIME, IMAP, POP3 i SMTP. Nail dostacza rozszerzone
+możliwości przy pracy interaktywnej, takie jak odłączone operacje dla
+IMAP, wątkowanie wiadomości, punktacja i filtrowanie.
 
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 %build
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}"
+	CFLAGS="%{rpmcflags}" \
+	MAILRC=/etc/mail.rc \
+	MAILSPOOL=/var/mail \
+	SENDMAIL=/usr/lib/sendmail
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/bin,/etc/skel,%{_bindir},%{_datadir}/misc} \
-	$RPM_BUILD_ROOT%{_mandir}/{man1,pl/man1}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,/etc/skel,/bin}
 
-install	misc/* $RPM_BUILD_ROOT%{_datadir}/misc
-install misc/mail.rc $RPM_BUILD_ROOT/etc/skel/.mailrc
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	MAILRC=/etc/mail.rc \
+	UCBINSTALL=/usr/bin/install \
+	PREFIX=%{_prefix}
 
-install mail $RPM_BUILD_ROOT/bin
+install mailx $RPM_BUILD_ROOT/bin/mail
+
+install nail.rc $RPM_BUILD_ROOT/etc/skel/.mailrc
+ln -s mail.rc $RPM_BUILD_ROOT/etc/nail.rc
+
 ln -sf ../../bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
 
-install mail.1 $RPM_BUILD_ROOT%{_mandir}/man1
-echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
-
-install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/pl/man1/mail.1
-echo .so mail.1 > $RPM_BUILD_ROOT%{_mandir}/pl/man1/Mail.1
+echo .so mailx.1 > $RPM_BUILD_ROOT%{_mandir}/man1/mail.1
+echo .so mailx.1 > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc AUTHORS ChangeLog README TODO
+%config(noreplace) %verify(not md5 mtime size) /etc/nail.rc
+%attr(755,root,root) %{_bindir}/mailx
+%{_mandir}/man1/n*
+%{_mandir}/man1/mailx*
 
-%attr(755,root,root) /bin/mail
-%attr(755,root,root) %{_bindir}/Mail
+%defattr(644,root,root,755)
+%doc AUTHORS ChangeLog README TODO
+%config(noreplace) %verify(not md5 mtime size) /etc/mail.rc
 
 /etc/skel/.mailrc
 
-%{_datadir}/misc/*
-%{_mandir}/man1/*
-%lang(pl) %{_mandir}/pl/man1/*
+%attr(755,root,root) /bin/mail
+%attr(755,root,root) %{_bindir}/Mail
+%{_mandir}/man1/[Mm]ail.*
