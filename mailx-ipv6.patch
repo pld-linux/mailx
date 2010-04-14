@@ -1,0 +1,11 @@
+--- mailx-12.4/Makefile~	2008-07-29 00:33:38.000000000 +0200
++++ mailx-12.4/Makefile	2010-04-14 13:14:15.339187324 +0200
+@@ -50,7 +50,7 @@
+ 
+ # If you know that the IPv6 functions work on your machine, you can enable
+ # them here.
+-#IPv6		= -DHAVE_IPv6_FUNCS
++IPv6		= -DHAVE_IPv6_FUNCS
+ 
+ #
+ # Binaries are stripped with this command after installation.

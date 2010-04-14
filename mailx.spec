@@ -9,6 +9,9 @@ Source0:	http://downloads.sourceforge.net/heirloom/%{name}-%{version}.tar.bz2
 # Source0-md5:	0c93759e34200eb56a0e7c464680a54a
 Patch0:		%{name}-bsdcompat.patch
 Patch1:		%{name}-use-krb5-gss.patch
+Patch2:		%{name}-openssl-nss.patch
+Patch3:		%{name}-openssl.patch
+Patch4:		%{name}-ipv6.patch
 URL:		http://heirloom.sourceforge.net/mailx.html
 BuildRequires:	heimdal-devel
 BuildRequires:	openssl-devel >= 0.9.7d
@@ -35,6 +38,9 @@ IMAP, wątkowanie wiadomości, punktacja i filtrowanie.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %{__make} \

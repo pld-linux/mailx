@@ -1,0 +1,52 @@
+--- mailx-12.4/makeconfig~	2010-04-14 13:04:22.441129101 +0200
++++ mailx-12.4/makeconfig	2010-04-14 13:11:52.843187470 +0200
+@@ -322,11 +322,24 @@
+ #}
+ #!
+ 
+-link_check nss 'for Network Security Services (NSS)' '#define USE_SSL
+-#define USE_NSS' '-lsmime3 -lnss3 -lssl3 -lnspr4 -lplc4' <<\! || \
+-		link_check openssl 'for sufficiently recent OpenSSL' \
+-			'#define USE_SSL
+-#define USE_OPENSSL' '-lssl -lcrypto' <<\%
++link_check openssl 'for sufficiently recent OpenSSL' '#define USE_SSL
++#define USE_OPENSSL' '-lssl -lcrypto' <<\! || \
++		link_check nss 'for Network Security Services (NSS)' \
++		'#define USE_SSL
++#define USE_NSS' '-lsmime3 -lnss3 -lssl3 -lnspr4 -lplc4' <<\%
++#include <openssl/ssl.h>
++#include <openssl/err.h>
++#include <openssl/x509v3.h>
++#include <openssl/x509.h>
++#include <openssl/rand.h>
++
++int main(void)
++{
++	SSLv23_client_method();
++	PEM_read_PrivateKey(0, 0, 0, 0);
++	return 0;
++}
++!
+ #include <nss.h>
+ #include <ssl.h>
+ #include <prinit.h>
+@@ -345,19 +358,6 @@
+ 	NSS_CMSSignerInfo_AddSMIMECaps(0);
+ 	return 0;
+ }
+-!
+-#include <openssl/ssl.h>
+-#include <openssl/err.h>
+-#include <openssl/x509v3.h>
+-#include <openssl/x509.h>
+-#include <openssl/rand.h>
+-
+-int main(void)
+-{
+-	SSLv23_client_method();
+-	PEM_read_PrivateKey(0, 0, 0, 0);
+-	return 0;
+-}
+ %
+ if test x$have_nss = xyes
+ then
