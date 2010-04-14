@@ -2,7 +2,7 @@ Summary:	An enhanced implementation of the mailx command
 Summary(pl.UTF-8):	Rozszerzona implementacja komendy mailx
 Name:		mailx
 Version:	12.4
-Release:	0.1
+Release:	1
 License:	BSD
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/heirloom/%{name}-%{version}.tar.bz2
