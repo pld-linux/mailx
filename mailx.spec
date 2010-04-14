@@ -60,17 +60,18 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,/etc/skel,/bin}
 	DESTDIR=$RPM_BUILD_ROOT \
 	MAILRC=/etc/mail.rc \
 	UCBINSTALL=/usr/bin/install \
-	PREFIX=%{_prefix}
-
-install mailx $RPM_BUILD_ROOT/bin/mail
+	PREFIX=%{_prefix} \
+	BINDIR=/bin
 
 install nail.rc $RPM_BUILD_ROOT/etc/skel/.mailrc
-ln -s mail.rc $RPM_BUILD_ROOT/etc/nail.rc
 
+ln -sf mailx $RPM_BUILD_ROOT/bin/mail
 ln -sf ../../bin/mail $RPM_BUILD_ROOT%{_bindir}/Mail
+ln -sf ../../bin/mail $RPM_BUILD_ROOT%{_bindir}/nail
 
-echo .so mailx.1 > $RPM_BUILD_ROOT%{_mandir}/man1/mail.1
 echo .so mailx.1 > $RPM_BUILD_ROOT%{_mandir}/man1/Mail.1
+echo .so mailx.1 > $RPM_BUILD_ROOT%{_mandir}/man1/mail.1
+echo .so mailx.1 > $RPM_BUILD_ROOT%{_mandir}/man1/nail.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -78,17 +79,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README TODO
-%config(noreplace) %verify(not md5 mtime size) /etc/nail.rc
-%attr(755,root,root) %{_bindir}/mailx
-%{_mandir}/man1/n*
-%{_mandir}/man1/mailx*
-
-%defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README TODO
 %config(noreplace) %verify(not md5 mtime size) /etc/mail.rc
 
 /etc/skel/.mailrc
 
-%attr(755,root,root) /bin/mail
-%attr(755,root,root) %{_bindir}/Mail
-%{_mandir}/man1/[Mm]ail.*
+%attr(755,root,root) /bin/mail*
+%attr(755,root,root) %{_bindir}/[Mn]ail
+%{_mandir}/man1/*
