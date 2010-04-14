@@ -12,6 +12,7 @@ Patch1:		%{name}-use-krb5-gss.patch
 Patch2:		%{name}-openssl-nss.patch
 Patch3:		%{name}-openssl.patch
 Patch4:		%{name}-ipv6.patch
+Patch5:		%{name}-pager.patch
 URL:		http://heirloom.sourceforge.net/mailx.html
 BuildRequires:	heimdal-devel
 BuildRequires:	openssl-devel >= 0.9.7d
@@ -41,6 +42,7 @@ IMAP, wątkowanie wiadomości, punktacja i filtrowanie.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__make} \
