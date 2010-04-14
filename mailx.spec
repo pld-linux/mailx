@@ -1,7 +1,7 @@
 Summary:	An enhanced implementation of the mailx command
 Summary(pl.UTF-8):	Rozszerzona implementacja komendy mailx
 Name:		mailx
-Version:	24.4
+Version:	12.4
 Release:	0.1
 License:	BSD
 Group:		Applications/Mail
