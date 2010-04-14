@@ -5,7 +5,7 @@ Version:	24.4
 Release:	0.1
 License:	BSD
 Group:		Applications/Mail
-Source0:	http://dl.sourceforge.net/heirloom/%{name}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/heirloom/%{name}-%{version}.tar.bz2
 # Source0-md5:	0c93759e34200eb56a0e7c464680a54a
 Patch0:		%{name}-bsdcompat.patch
 Patch1:		%{name}-use-krb5-gss.patch
@@ -17,13 +17,12 @@ Obsoletes:	nail-mail
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Heirloom mailx is derived from Berkeley Mail and is intended provide the
-functionality of the POSIX mailx command with additional support
-for MIME messages, IMAP, POP3, and SMTP. It provides enhanced
-features for interactive use, such as caching and disconnected
-operation for IMAP, message threading, scoring, and filtering.
-It is also usable as a mail batch language, both for sending
-and receiving mail.A
+Heirloom mailx is derived from Berkeley Mail and is intended provide
+the functionality of the POSIX mailx command with additional support
+for MIME messages, IMAP, POP3, and SMTP. It provides enhanced features
+for interactive use, such as caching and disconnected operation for
+IMAP, message threading, scoring, and filtering. It is also usable as
+a mail batch language, both for sending and receiving mail.
 
 %description -l pl.UTF-8
 Heirloom mailx został stworzony na podstawie Berkeley Mail z zamysłem
