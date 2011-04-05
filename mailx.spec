@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	kerberos5	# build without Kerberos support
+
 Summary:	An enhanced implementation of the mailx command
 Summary(pl.UTF-8):	Rozszerzona implementacja komendy mailx
 Name:		mailx
@@ -14,7 +18,12 @@ Patch3:		%{name}-openssl.patch
 Patch4:		%{name}-ipv6.patch
 Patch5:		%{name}-pager.patch
 URL:		http://heirloom.sourceforge.net/mailx.html
+%if %{with kerberos5}
 BuildRequires:	heimdal-devel
+%else
+BuildConflicts:	heimdal-devel
+BuildConflicts:	krb5-devel
+%endif
 BuildRequires:	openssl-devel >= 0.9.7d
 Obsoletes:	nail
 Obsoletes:	nail-mail
