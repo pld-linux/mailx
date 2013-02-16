@@ -18,12 +18,7 @@ Patch3:		%{name}-openssl.patch
 Patch4:		%{name}-ipv6.patch
 Patch5:		%{name}-pager.patch
 URL:		http://heirloom.sourceforge.net/mailx.html
-%if %{with kerberos5}
-BuildRequires:	heimdal-devel
-%else
-BuildConflicts:	heimdal-devel
-BuildConflicts:	krb5-devel
-%endif
+%{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	openssl-devel >= 0.9.7d
 Obsoletes:	nail
 Obsoletes:	nail-mail
@@ -52,6 +47,8 @@ IMAP, wątkowanie wiadomości, punktacja i filtrowanie.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+
+%{!?with_kerberos5:sed -i -e 's#gssapi.h#crap.h#g' makeconfig}
 
 %build
 %{__make} \
