@@ -48,7 +48,7 @@ IMAP, wątkowanie wiadomości, punktacja i filtrowanie.
 %patch4 -p1
 %patch5 -p1
 
-%{!?with_kerberos5:sed -i -e 's#gssapi.h#crap.h#g' makeconfig}
+%{!?with_kerberos5:sed -i -e 's#gssapi.h#puke.h#g' makeconfig}
 
 %build
 %{__make} \
