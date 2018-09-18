@@ -6,7 +6,7 @@ Summary:	An enhanced implementation of the mailx command
 Summary(pl.UTF-8):	Rozszerzona implementacja komendy mailx
 Name:		mailx
 Version:	12.4
-Release:	6
+Release:	7
 License:	BSD
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/heirloom/%{name}-%{version}.tar.bz2
@@ -17,6 +17,7 @@ Patch2:		%{name}-openssl-nss.patch
 Patch3:		%{name}-openssl.patch
 Patch4:		%{name}-ipv6.patch
 Patch5:		%{name}-pager.patch
+Patch6:		openssl.patch
 URL:		http://heirloom.sourceforge.net/mailx.html
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	openssl-devel >= 0.9.7d
@@ -47,6 +48,7 @@ IMAP, wątkowanie wiadomości, punktacja i filtrowanie.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %{!?with_kerberos5:sed -i -e 's#gssapi.h#puke.h#g' makeconfig}
 
