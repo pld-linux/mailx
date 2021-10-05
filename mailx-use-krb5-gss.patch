@@ -1,6 +1,7 @@
---- nail-11.25/makeconfig~	2004-11-17 20:09:19.000000000 +0100
-+++ nail-11.25/makeconfig	2008-01-15 18:49:49.000000000 +0100
-@@ -364,12 +364,10 @@
+diff -urNp -x '*.orig' mailx-12.4.org/makeconfig mailx-12.4/makeconfig
+--- mailx-12.4.org/makeconfig	2007-04-14 17:24:28.000000000 +0200
++++ mailx-12.4/makeconfig	2021-10-05 22:58:00.427635968 +0200
+@@ -405,12 +405,10 @@ int main(void)
  }
  !
  
@@ -15,5 +16,5 @@
 +	link_check gssapi 'for GSSAPI in libgssapi_krb5, old-style' \
 +			'#define USE_GSSAPI
  #define GSSAPI_OLD_STYLE' '-lgssapi_krb5' <<\! || \
- 			link_check 'for GSSAPI in libgssapi' \
+ 			link_check gssapi 'for GSSAPI in libgssapi' \
  				'#define USE_GSSAPI

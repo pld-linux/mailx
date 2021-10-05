@@ -6,7 +6,7 @@ Summary:	An enhanced implementation of the mailx command
 Summary(pl.UTF-8):	Rozszerzona implementacja komendy mailx
 Name:		mailx
 Version:	12.4
-Release:	7
+Release:	8
 License:	BSD
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/heirloom/%{name}-%{version}.tar.bz2
@@ -66,6 +66,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,/etc/skel,/bin}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
+	STRIP=/bin/true \
 	MAILRC=/etc/mail.rc \
 	UCBINSTALL=/usr/bin/install \
 	PREFIX=%{_prefix} \
